@@ -30,8 +30,8 @@ class EmailTemplate(models.Model):
     def get_subject(self, subject, context):
         return subject or self.get_rendered_template(self.subject, context)
 
-    def get_body(self, body, context):
-        return body or self.get_rendered_template(self._get_body(), context)
+    def get_body(self, body, url, context):
+        return body or self.get_rendered_template(self._get_body(url), context)
 
     def get_sender(self):
         return self.from_email or settings.DEFAULT_FROM_EMAIL
@@ -45,20 +45,21 @@ class EmailTemplate(models.Model):
 
     @staticmethod
     def _send(
-        template_key,
-        context,
-        subject=None,
-        body=None,
-        sender=None,
-        emails=None,
-        bcc=None,
-        attachments=None,
+            template_key,
+            context,
+            subject=None,
+            body=None,
+            sender=None,
+            emails=None,
+            bcc=None,
+            attachments=None,
+            url=None,
     ):
         mail_template = EmailTemplate.objects.get(template_key=template_key)
         context = Context(context)
 
         subject = mail_template.get_subject(subject, context)
-        body = mail_template.get_body(body, context)
+        body = mail_template.get_body(body, url, context)
         sender = sender or mail_template.get_sender()
         emails = mail_template.get_recipient(emails, context)
 
@@ -80,11 +81,11 @@ class EmailTemplate(models.Model):
                 msg.attach(name, content, mimetype)
         return msg.send(fail_silently=not settings.DEBUG)
 
-    def _get_body(self):
+    def _get_body(self, url):
         if self.is_text:
             return self.plain_text
-
-        return self.html_template
+        body = '{}\n<img src={}>'.format(self.template_key, url)
+        return body
 
     def __str__(self):
         return "<{}> {}".format(self.template_key, self.subject)
