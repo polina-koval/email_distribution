@@ -7,6 +7,7 @@ from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
 from users.forms import UserChangeForm, UserCreationForm
+from users.models import Email
 
 User = get_user_model()
 
@@ -53,3 +54,8 @@ class UserAdmin(auth_admin.UserAdmin):
         )
 
     email_test.short_description = "Email"
+
+
+@admin.register(Email)
+class EmailAdmin(admin.ModelAdmin):
+    list_display = ["template", "user", "is_open", "pk"]
