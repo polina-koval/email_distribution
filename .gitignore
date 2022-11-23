@@ -19,3 +19,4 @@ env/
 venv/
 ENV/
 celerybeat-schedule
+celerybeat.pid
