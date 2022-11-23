@@ -1,4 +1,5 @@
-#!/usr/bin/env python
+# pylint: skip-file
+# #!/usr/bin/env python
 import os
 import sys
 
