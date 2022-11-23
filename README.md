@@ -1,5 +1,5 @@
-# Board games project  
-The site provides a catalog of board games with user authorization, comments and likes. There is also an API.  
+# Email distribution project  
+The project allows you to send emails by storing templates in the database. The opening of the email is also tracked by a pixel built into the email. Celery and Redis are used.
 
 ## Getting Started  
 The first thing to do is to clone the repository:  
