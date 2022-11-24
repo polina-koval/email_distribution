@@ -22,7 +22,9 @@ Then install the dependencies:
 (venv)$ pip install -r requirements.txt
 ```  
 
-There is a file in the repo ".env.example", this file for use in local development. Duplicate this file as .env in the root of the project and update the environment variables SECRET_KEY, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD.  
+There is a file in the repo ".env.example", this file for use in local development. 
+Duplicate this file as .env in the root of the project and update the environment 
+variables SECRET_KEY, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, etc.  
 
 ```sh
 $ cp .env.example .env
@@ -48,4 +50,7 @@ Celery:
 ```
 
 After configuring and running, go to the admin panel. 
-In it, as a test, you can send emails to existing users.
+In it(users app), as a test, you can send emails to existing users
+(just create email template with template_key = "test"). In template you can
+use value in format {{value}}. Value can be user.username, user.email, 
+user.first_name, user.last_name, etc.
